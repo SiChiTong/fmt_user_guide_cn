@@ -52,3 +52,25 @@ FMT 还包括了一个完整的仿真模型框架，支持模型在环仿真 (Mo
 - 多旋翼的对象模型：包括动力学模型，作动器模型，环境模型和传感器模型等。
 
 各个模型可以一键生成 C/C++ 代码，并无缝合入 FMT 嵌入式飞控。FMT_Model 除了提供一套基础的算法模型以外，还为各个模型提供了模板，您可以基于模板快速开发自己的算法模型并部署到飞控上。
+
+# 手册目录
+
+## FMT Firmware
+
+- FMT Firmware架构
+- 快速上手
+- 组件 (Module)
+- 驱动和硬件虚拟设备 (Driver/HAL)
+- 任务 (Task)
+- 硬件在环仿真 (HIL/SIH)
+
+## FMT Model
+
+- FMT Model架构
+- 快速上手
+- 模型在环仿真 (MIL Simulation)
+- 开环仿真 (Open-loop Simulation)
+- 模型接口标准 (FMT Model Interface)
+- 算法模型库
+- 代码生成与模型合入
+- 模型二次开发
