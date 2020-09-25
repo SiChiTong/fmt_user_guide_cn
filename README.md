@@ -1,4 +1,4 @@
-# Firmament Autoppilot
+# Firmament Autopilot
 
 ## 概述
 Firmament (FMT) Autopilot 是首个基于模型设计 (Model-Based Design， 简称MBD) 的开源自驾仪。项目始于2016年，从 Starry Pilot 开源飞控发展而来。FMT 包括嵌入式一个主要用C语言写的嵌入式飞控系统以及基于 Matlab/Simulink 开发的算法模型库和仿真框架。
@@ -10,7 +10,7 @@ Firmament (FMT) Autopilot 是首个基于模型设计 (Model-Based Design， 简
 ## FMT 架构
 FMT 主要包含两部分，其中 FMT_Firmware 提供嵌入式飞控系统的功能，FMT_Model 提供模型仿真功能以及算法模型库。
 
-FMT Firmware 为飞控的嵌入式部分，采用**分层设计模式**，层与层，模块与模块之间松耦合，易于单独添加/删除模各个模块。 FMT Firmware 架构如下图所示。
+**FMT Firmware** 为飞控的嵌入式部分，采用**分层设计模式**，层与层，模块与模块之间松耦合，易于单独添加/删除模各个模块。 FMT Firmware 架构如下图所示。
 
 ![Firmament system framework](figures/fmt_struct.png)
 
@@ -21,6 +21,10 @@ FMT Firmware 为飞控的嵌入式部分，采用**分层设计模式**，层与
 - 硬件抽象层 (HAL)： 在Driver层之上的HAL为上层提供统一的设备接口 (rt_read, rt_write, rt_control)，这样当替换不同的驱动设备或者移植到不同硬件上时，上层将不需要或者只需做很少的改动即可。一些与硬件无关的驱动逻辑也可以都放在HAL层中实现，这样就简化了驱动的开发难度。
 - 模块层 (Module)：模块层提供FMT系统的基础功能模块，系统的大部分功能在这层实现，并提供给Task层进行组合，调用。比如跨进程通信模块uMCN提供基于发布/订阅模式的安全跨进程通信机制。log模块提供了二进制日志 (blog)和文字日志 (ulog)的功能。blog提供功能强大的数据记录功能，在不影响高优先级任务的前提下实时记录算法模块的输入/输入数据，供Simulink模型进行开环仿真。param参数模块提供方便的参数功能，支持命令行/地面站在线调参，并且参数将被记录到blog日志中，供仿真模块读取。算法模块INS, FMS, Controller为FMT Model生成的C/C++源文件，只要模块符合FMT Model Interface的标准，则可以直接嵌入到FMT飞控中，而无需做任何修改。Plant模块为无人机的物理模型 (也可以是其它对象模型)，同样为FMT Model生成。它主要是为了支持HIL Internal仿真模式，即无人机模型 (包括传感器模型)跑在飞控上而非外部的实时PC。
 - 任务层 (Task)： 每个Task为一个单独的线程 (内部可以创建子线程) 实现独立的功能。比如最重要的Vehicle任务，将选择适合被控对象的INS，FMS和Controller组件，负责周期性运行模型并采集和发布模型的输入/输出数据，因此Vehicle任务具有最高优先级，以保证被控对象的稳定。FMT IO任务负责跟IO协处理器进行通信，IO将提供RC和Motor等相关的功能。Logger任务负责将采集blog和ulog的日志数据并存储到对应的存储设备，如SD卡。Communication任务使用mavproxy模块的接口提供mavlink通信相关的功能。Status任务的主要功能是显示当前系统的状态，可以通过LED，蜂鸣器和控制台等进行显示。
+
+**FMT Model** 为 基于 Matlab/Simulink平台编写的一个完整的仿真模型框架。支持模型在环仿真 (Model-in-the-loop Simulation, MIL)，软件在环仿真 (Software-in-the-loop Simulation, SIL) 和开环仿真 (Open-loop Simulation)。
+
+除此以外，FMT Model包括一套完整的无人机算法模型库。可以分为四个部分，分别为导航系统（INS），飞行管理系统（FMS） ，控制系统（Controller） 和 被控对象建模（Plant）。每个部分包含多个算法模型，不同模型支持不同的算法以及适用于不同的被控对象。可以根据需要进行自由组合，只要模型符合 FMT Model Interface (FMI) 模型接口规范。 算法模型可以直接编译生成 C/C++ 源码并无缝嵌入到 FMT 嵌入式飞控系统中。
 
 ## 为什么使用 FMT
 基于模型设计是一种数学及可视化的设计方法，通过图形化的方式设计复杂的飞控或者其它控制系统。目前大部分开源飞控系统的研发手段还是采用传统的手动编码的开发模式。这种方式固然有其优势，但是其劣势也越来越明显。特别当系统变得越来越庞大，功能越来越复杂，使用手写的算法模块变得越来越难以维护，也不可避免的造成代码的安全性和可移植性越来越差。
