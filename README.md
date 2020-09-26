@@ -1,9 +1,9 @@
 # Firmament Autopilot
 
 ## 概述
-Firmament (FMT) Autopilot 是首个基于模型设计 (Model-Based Design， 简称MBD) 的开源自驾仪。FMT 项目从 Starry Pilot 开源飞控发展而来。FMT 包括嵌入式一个主要用C语言写的嵌入式飞控系统以及基于 Matlab/Simulink 开发的算法模型库和仿真框架。
+Firmament (FMT) Autopilot 是首个基于模型设计 (Model-Based Design， 简称MBD) 的开源自驾仪。FMT 项目从 [Starry Pilot](https://github.com/JcZou/StarryPilot) 开源飞控发展而来。FMT 包括嵌入式一个主要用C语言写的嵌入式飞控系统以及基于 Matlab/Simulink 开发的算法模型库和仿真框架。
 
-基于FMT平台可以更快速的开发和验证的飞控算法，无需手动编写嵌入式代码，只需要在Simulink中通过图形化的方式设计算法模型并一键生成代码并合入飞控。
+基于FMT平台可以更快速的开发和验证的飞控算法，无需手动编写嵌入式代码，只需要在Simulink中通过图形化的方式设计算法模型并一键生成代码然后合入飞控。
 
 **项目源码地址**：https://github.com/FirmamentPilot
 
@@ -17,13 +17,13 @@ FMT 的核心算法使用 Simulink 搭建，继承了 MBD 开发模式的诸多�
 3. 极大提升算法的优化和 Debug 效率，简化系统测试和验证流程。
 4. 提高算法的可维护性和可移植性。
 
-FMT 包括一个轻量级，高实时性 ( 时间误差 < 1us ) 和高性能 ( 更低的 CPU 使用率 ) 的嵌入式飞控系统 FMT_Firmware，支持当前最流行的开源飞控硬件 Pixhawk V2。
+FMT Firmware 是一个轻量级，高实时性和高性能的嵌入式飞控系统 FMT_Firmware，支持当前最流行的开源飞控硬件 Pixhawk (2.4.6/2.4.8)。
 
 - C 语言编写的轻量级飞控系统，高度模块化设计，更加易于使用和二次开发。
 - 基于硬实时操作系统 RT-Thread，时间误差 < 1us。
-- 高度优化的系统结构和算法，可以用更高频率运行复杂的算法模块。比如以 500Hz 运行基础导航和控制器，250Hz 运行飞行管理状态机的 CPU 使用率 < 30%，开启日志功能 CPU 使用率 < 50%。
-- 支持 Mavlink V1.0/V2.0
-- 支持半物理硬件在环仿真 (Hardware-in-the-loop Simulation, HIL) 和无人机动力学模型直接运行在飞控上的硬件仿真 (Simulator-in-hardware, SIH)。
+- 高度优化的系统结构和算法，可以用更高频率运行复杂的算法模块。比如以 500Hz 运行基础导航和控制器，250Hz 运行飞行管理状态机的 CPU 使用率 < 30%。更大的空间用以提高算法的复杂度和运行频率。
+- 支持 Mavlink V1.0/V2.0，支持主流地面站 QGC，Mission Planner等。
+- 支持半物理硬件在环仿真 (Hardware-in-the-loop Simulation, HIL) 和无人机模型运行在飞控上的硬件仿真 (Simulator-in-hardware, SIH)。
 
 FMT 还包括了一个完整的仿真模型框架，支持模型在环仿真 (Model-in-the-loop Simulation, MIL)，软件在环仿真 (Software-in-the-loop Simulation, SIL) 和 开环仿真 (Open-loop Simulation)。 以及一套完整的多旋翼基础算法模型，包括：
 
@@ -32,7 +32,7 @@ FMT 还包括了一个完整的仿真模型框架，支持模型在环仿真 (Mo
 - 基础控制模型：基于串级 PID 的控制器模型和控制分配。包括速度环、角度环和角速度环控制器。
 - 多旋翼的对象模型：包括动力学模型，作动器模型，环境模型和传感器模型等。
 
-各个模型可以一键生成 C/C++ 代码，并无缝合入 FMT 嵌入式飞控。FMT_Model 除了提供一套基础的算法模型以外，还为各个模型提供了模板，您可以基于模板快速开发自己的算法模型并部署到飞控上。
+各个模型可以配置运行频率并一键生成 C/C++ 代码，然后无缝合入 FMT 嵌入式飞控中。FMT_Model 除了提供一套基础的算法模型以外，还提供算法模型模板，基于模板可以更快速开发自己的算法模型。
 
 # 手册目录
 
@@ -47,11 +47,10 @@ FMT 还包括了一个完整的仿真模型框架，支持模型在环仿真 (Mo
 
 ## FMT Model
 
-- FMT Model架构
-- 快速上手
-- 模型在环仿真 (MIL Simulation)
-- 开环仿真 (Open-loop Simulation)
-- 模型接口标准 (FMT Model Interface)
+- [FMT Model架构](fmt_model/architecture/architecture.md)
+- [快速上手](fmt_model/quick_start/quick_start.md)
+- [模型仿真](fmt_model/simulation/simulation.md)
+- [模型接口标准 (FMT Model Interface)](fmt_model/fmt_model_interface/fmt_model_interface.md)
 - 算法模型库
 - 代码生成与模型合入
 - 模型二次开发
