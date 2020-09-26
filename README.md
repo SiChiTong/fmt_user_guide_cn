@@ -52,5 +52,5 @@ FMT 还包括了一个完整的仿真模型框架，支持模型在环仿真 (Mo
 - [模型仿真](fmt_model/simulation/simulation.md)
 - [模型接口标准 (FMT Model Interface)](fmt_model/fmt_model_interface/fmt_model_interface.md)
 - 算法模型库
-- 代码生成与模型合入
+- [模型代码生成与合入](fmt_model/code_generation/code_generation.md)
 - 模型二次开发
