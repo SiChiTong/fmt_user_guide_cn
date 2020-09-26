@@ -47,11 +47,10 @@ FMT 还包括了一个完整的仿真模型框架，支持模型在环仿真 (Mo
 
 ## FMT Model
 
-- FMT Model架构
-- 快速上手
-- 模型在环仿真 (MIL Simulation)
-- 开环仿真 (Open-loop Simulation)
-- 模型接口标准 (FMT Model Interface)
+- [FMT Model架构](fmt_model/architecture/architecture.md)
+- [快速上手](fmt_model/quick_start/quick_start.md)
+- [模型仿真](fmt_model/simulation/simulation.md)
+- [模型接口标准 (FMT Model Interface)](fmt_model/fmt_model_interface/fmt_model_interface.md)
 - 算法模型库
 - 代码生成与模型合入
 - 模型二次开发
