@@ -16,7 +16,7 @@ FMT Model 的算法模型可以分为四类，分别是：
 	- Template FMS
 - Controller
 	- [Base Controller](https://github.com/FirmamentPilot/Base_Controller)
-	- Template FMS
+	- [Template Controller](https://github.com/FirmamentPilot/Template_Controller)
 - Plant
 	- [Multicopter Model](https://github.com/FirmamentPilot/Multicopter_Model)
 
